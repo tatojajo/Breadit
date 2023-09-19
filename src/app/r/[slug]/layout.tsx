@@ -73,7 +73,7 @@ const Layout = async ({ children, params: { slug } }: { children: React.ReactNod
                                 </div>
                             ) : null}
                             {subreddit.creatorId !== session?.user.id ? (
-                                <SubscribeLeaveToggle subredditId={subreddit.id} subredditName={subreddit.name} />
+                                <SubscribeLeaveToggle subredditId={subreddit.id} subredditName={subreddit.name} isSubscribed={isSubscrebed} />
                             ) : null}
                         </dl>
                     </div>

@@ -1,9 +1,11 @@
+import SubscribeLeaveToggle from "@/components/SubscribeLeaveToggle"
 import { getAuthSession } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { format } from "date-fns"
 import { notFound } from "next/navigation"
 
 const Layout = async ({ children, params: { slug } }: { children: React.ReactNode, params: { slug: string } }) => {
+
     const session = await getAuthSession()
 
     const subreddit = await db.subreddit.findFirst({
@@ -41,7 +43,6 @@ const Layout = async ({ children, params: { slug } }: { children: React.ReactNod
             }
         }
     })
-
     return (
         <div className="sm:container max-w-7xl mx-auto h-full pt-12">
             <div>
@@ -70,6 +71,9 @@ const Layout = async ({ children, params: { slug } }: { children: React.ReactNod
                                 <div className="flex justify-between gap-x-4 py-3">
                                     <p className="text-grey-500">You created this community</p>
                                 </div>
+                            ) : null}
+                            {subreddit.creatorId !== session?.user.id ? (
+                                <SubscribeLeaveToggle subredditId={subreddit.id} subredditName={subreddit.name} />
                             ) : null}
                         </dl>
                     </div>

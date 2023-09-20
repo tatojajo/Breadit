@@ -57,6 +57,8 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subreadditName }) => {
           return (
             <li key={post.id} ref={ref}>
               <Post
+                currentVote={currentVote}
+                votesAmt={votesAmt}
                 commentAmt={post.comments.length}
                 subredditName={post.subreddit.name}
                 post={post}
@@ -66,6 +68,8 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subreadditName }) => {
         } else {
           return (
             <Post
+              currentVote={currentVote}
+              votesAmt={votesAmt}
               commentAmt={post.comments.length}
               subredditName={post.subreddit.name}
               post={post}

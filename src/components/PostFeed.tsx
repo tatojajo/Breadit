@@ -1,12 +1,12 @@
 "use client";
 import { ExtendedPost } from "@/types/db";
-import { FC, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useIntersection } from "@mantine/hooks";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from "@/config";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import Post from "../Post";
+import Post from "./Post";
 
 interface PostFeedProps {
   initialPosts: ExtendedPost[];
@@ -40,6 +40,12 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subreadditName }) => {
       },
     }
   );
+
+  useEffect(() => {
+    if (entry?.isIntersecting) {
+      fetchNextPage();
+    }
+  }, [entry?.isIntersecting]);
 
   const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
   return (
